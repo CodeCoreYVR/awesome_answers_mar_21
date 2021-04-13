@@ -43,6 +43,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'cowsay', '~> 0.3.0'
+  gem 'pry', '~> 0.14.1'
+  gem 'pry-rails', '~> 0.3.9'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
