@@ -19,6 +19,6 @@ class WelcomeController < ApplicationController
         # But if we wnat to render some other page we can do this as well : render '<path to view>'
         # Some examples of templating langauges are HAML, SLIM
 
-        render 'hello'
+        render 'contacts/hello'
     end
 end
