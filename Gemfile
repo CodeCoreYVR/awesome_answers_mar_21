@@ -2,6 +2,14 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
+#Make sure your Ruby version that you are using is the same as what it says in this file
+#You can do "which ruby" or "ruby -v" to see what version of Ruby you are currently using
+#If you have rvm, say rvm use <version of ruby above> or as temp fix you can change version 
+#above to the version you have
+#Then: bundle install
+#Then: rails db:drop
+#Then: rails db:create
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
           # Major.Minor.Patch
@@ -21,6 +29,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+gem 'hirb'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
