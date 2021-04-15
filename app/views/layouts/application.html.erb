@@ -11,8 +11,11 @@
   </head>
 
   <body>
+    <%= flash[:notice] || flash[:alert] %>
     <%= link_to 'Home', root_path  %> | 
-    <%= link_to 'Contact us', contacts_new_path  %> 
+    <%= link_to 'Contact us', contacts_new_path  %> |
+    <%= link_to 'New Question', new_question_path  %> |
+    <%= link_to 'All Question', questions_path  %> 
     
     <%= yield %>
   </body>
