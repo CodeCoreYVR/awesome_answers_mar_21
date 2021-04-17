@@ -1,6 +1,9 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
-<p><%= @question.created_at %></p>
+<p><strong>View Count:</strong><%= @question.view_count %></p>
+<p><strong>Created At:</strong><%= @question.created_at %></p>
+<p><strong>Updated At:</strong><%= @question.updated_at %></p>
 
 <%= link_to "Edit", edit_question_path(@question) %>
 <%= link_to "Delete", question_path(@question), method: :delete, data: { confirm: "Are you sure?" } %>
+

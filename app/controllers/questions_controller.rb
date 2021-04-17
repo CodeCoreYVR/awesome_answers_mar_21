@@ -2,14 +2,18 @@ class QuestionsController < ApplicationController
     # see more about controller life cycle hooks/callbacks here https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html
     before_action :find_question, only: [:show, :edit, :update, :destroy]
 
+    # If you want to pass variables to views, you must define them as
+    # instance variables. That is prefix `@` in front of their name. Local
+    # variables are inaccessible inside views.
+
     #returns all the questions from the database
     def index
-       @questions = Question.all #Model.all is a method built into active record used to return all records of that model 
+       @questions = Question.all.order(created_at: :desc) #Model.all is a method built into active record used to return all records of that model 
     end
 
     def new
         #because Rails form helper methods need an instance of a model to work, we create a new instance
-        @new_question = Question.new
+        @question = Question.new
     end
 
     def create
@@ -25,6 +29,13 @@ class QuestionsController < ApplicationController
     end
 
     def show
+        #In the Model question.rb we created a custom method to set our view count to zero 
+        #when the instance of a question is created. Now we can add to our view count every time
+        #a user views the specific question on the show page as follows:
+        @question.update(view_count: @question.view_count + 1)
+        # Alternate:
+        # @question.view_count += 1
+        # @question.save
     end
 
     def edit

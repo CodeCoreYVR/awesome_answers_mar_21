@@ -1,6 +1,6 @@
 <%#
   To create a form for a resource (i.e. a model), use
-  the form_for helper instead of formm_tag. Its usual
+  the form_for helper instead of form_tag. Its usual
   arguments are:
   - A named argument 'model' which is assigned an
   instance of a model (i.e. a new question)
@@ -14,16 +14,7 @@
    (e.g. <input type="text" name="question[title]" id="question_title"> => { "question": { "title": "What?"} })
 %>
 
+<h1>New Question</h1>
 
+<%= render 'form' %>
 
-<%= form_for @new_question do |f| %>
-    <div>
-        <%= f.label :title %>
-        <%= f.text_field :title %>
-    </div>
-    <div>
-        <%= f.label :body %>
-        <%= f.text_field :body %>
-    </div>
-    <%= f.submit %>
-<% end %>

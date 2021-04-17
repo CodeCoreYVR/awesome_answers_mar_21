@@ -24,14 +24,14 @@ Rails.application.routes.draw do
   #7. destroy: DELETE "/<resources>/:id" - delete a record from the database
   #DELETE "/questions/1" - delete the question with id 1
 
-  # #index
-  # get('/questions', { to: 'questions#index', as: :questions_index })
-
   # #new
   # get('/questions/new', { to: 'questions#new', as: :new_question })
 
   # #create
   # post('/questions', { to: 'questions#create', as: :questions})
+
+  # #index
+  # get('/questions', { to: 'questions#index' })
 
   # #show
   # get('/questions/:id', { to: 'questions#show', as: :question } )
