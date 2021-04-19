@@ -10,6 +10,11 @@
 Answer.destroy_all # .delete_all
 Question.destroy_all
 
+## Diff b/w delete_all and destroy_all
+# delete_all will forceably remove records from the corresponding table without activating any rails callbacks.
+
+# destroy_all will remove the records but also call the model callbacks
+
 NUM_QUESTION=200
 
 NUM_QUESTION.times do

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'answers/create'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
     # when someone visits GET localhost:3000/ it will be handled by "WelcomeController" index Method
 
@@ -46,7 +47,9 @@ Rails.application.routes.draw do
   # delete('/questions/:id', { to: 'questions#destroy' })
 
   #resources builds all of the above RESTful routes to Rails Convention
-  resources :questions
+  resources :questions do
+    resources :answers, only:[:create]
+  end
 
 
 end

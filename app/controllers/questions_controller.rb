@@ -36,6 +36,7 @@ class QuestionsController < ApplicationController
         # Alternate:
         # @question.view_count += 1
         # @question.save
+        @answer=Answer.new
     end
 
     def edit
