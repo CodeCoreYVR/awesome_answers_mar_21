@@ -1,4 +1,11 @@
 class Question < ApplicationRecord
+    has_many :answers, dependent: :destroy # :nullify
+    #  The popualr options are :destroy and :nullify. if you have answers associated with a question and you delete the question
+    #  this will happen:
+    #  :destroy option: it will delete all the answers whose question_id is the id of the question you deleted
+    #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
+
+
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
     #This above command creates this model Class in file question.rb
