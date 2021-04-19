@@ -48,7 +48,7 @@ Rails.application.routes.draw do
 
   #resources builds all of the above RESTful routes to Rails Convention
   resources :questions do
-    resources :answers, only:[:create]
+    resources :answers, only:[:create, :destroy]
   end
 
 

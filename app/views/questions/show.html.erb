@@ -14,6 +14,7 @@
 <% if @answer.errors.full_messages.each do |msg|%>
 <ul>
     <li> <%= msg %></li>
+
 </ul>
 <% end %>
 <% end %>
@@ -26,6 +27,7 @@
 <% @answers.each do |answer|%>
 
 <%= answer.body %>
+<%= link_to("Delete", question_answer_path(@question,answer), method: :delete, data:{confirm: 'Are you sure?'})%>
 <hr>
 
 <% end %>
