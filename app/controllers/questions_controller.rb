@@ -37,6 +37,7 @@ class QuestionsController < ApplicationController
         # @question.view_count += 1
         # @question.save
         @answer=Answer.new
+        @answers=@question.answers.order(created_at: :desc)
     end
 
     def edit
