@@ -10,6 +10,9 @@ class User < ApplicationRecord
     # it is an optional but if we have this, has_secure_password will perform validation on it for us.
     # Once the password is validated and verified,it saves the password in an ecrypted form using brypt and stores in a db , in password_digest column for us
     # it will add a 'authenticate' method to verify user's password. if called with the correct password, it will return 'true' or 'false' based on if the password is correct or not
+    has_many :questions, dependent: :nullify
+    has_many :answers, dependent: :nullify
+
     def full_name
         "#{first_name} #{last_name}"
     end

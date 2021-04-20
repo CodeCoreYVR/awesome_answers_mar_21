@@ -4,7 +4,7 @@ class Question < ApplicationRecord
     #  this will happen:
     #  :destroy option: it will delete all the answers whose question_id is the id of the question you deleted
     #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
-
+    belongs_to :user, optional: true
 
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
