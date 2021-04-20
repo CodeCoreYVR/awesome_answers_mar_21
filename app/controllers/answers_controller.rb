@@ -9,6 +9,7 @@ class AnswersController < ApplicationController
     
     @answer=Answer.new answer_params
     @answer.question=@question
+    @answer.user=current_user
     if @answer.save
       redirect_to question_path(@question), notice: 'Answer created'
     else 

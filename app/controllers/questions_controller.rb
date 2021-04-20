@@ -19,6 +19,7 @@ class QuestionsController < ApplicationController
 
     def create
         @question = Question.new question_params
+        @question.user=current_user
 
         if @question.save
             # flash is a hash that is accessible within controllers. It's also available within the views
