@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+    before_action :authenticate_user!, except:[:index, :show]
     # see more about controller life cycle hooks/callbacks here https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html
     before_action :find_question, only: [:show, :edit, :update, :destroy]
 
