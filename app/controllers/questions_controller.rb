@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+    before_action :authorize_user!, only:[:edit,:update,:destroy]
     before_action :authenticate_user!, except:[:index, :show]
     # see more about controller life cycle hooks/callbacks here https://api.rubyonrails.org/classes/AbstractController/Callbacks/ClassMethods.html
     before_action :find_question, only: [:show, :edit, :update, :destroy]
@@ -68,6 +69,9 @@ class QuestionsController < ApplicationController
 
     def find_question
         @question = Question.find params[:id]
+    end
+    def authorize_user!
+        redirect_to root_path, alert: 'Not Authorized' unless can?(:crud,@question)
     end
 
 end
