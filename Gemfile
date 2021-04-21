@@ -32,6 +32,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'hirb'
 # Step 1: Authorization - install cancancan gem and then bundle install
 gem 'cancancan'
+gem 'bootstrap', '~> 4.6.0'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

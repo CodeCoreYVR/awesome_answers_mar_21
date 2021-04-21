@@ -9,3 +9,7 @@ import "channels"
 
 Rails.start()
 ActiveStorage.start()
+
+import 'bootstrap';
+
+console.log('Hell from app/javascript/packs/application.js')
