@@ -52,5 +52,9 @@ class Ability
       user == answer.user
     end
 
+    if user.is_admin?
+      can :manage, :all # manage means is_admin can do every thing on ALL the models 
+    end
+
   end
 end

@@ -23,7 +23,8 @@ super_user= User.create(
     first_name: "Jon",
     last_name: 'Snow',
     email: 'js@winterfell.gov',
-    password: PASSWORD
+    password: PASSWORD,
+    is_admin: true
 )
 10.times do 
     first_name= Faker:: Name.first_name
