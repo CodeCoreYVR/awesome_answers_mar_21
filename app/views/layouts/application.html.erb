@@ -60,7 +60,9 @@
   </div>
 </nav>    
     <hr>
-    <%= flash[:notice] || flash[:alert] %>     
+    <div class='container-fluid'>
+      <%= render 'layouts/alerts'%>
     <%= yield %>
+  </div>
   </body>
 </html>
