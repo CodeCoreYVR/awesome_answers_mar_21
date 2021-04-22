@@ -4,12 +4,12 @@ require './cookie.rb'
 class TestCookie < Minitest::Test
     # Cookie has a sugar method or not 
     def test_cookie_has_sugar_method
-    # Given
-    c=Cookie.new(5,10)
-    # When
-    result=c.sugar
-    # Then
-    assert_equal(result,5)    
+        # Given
+        c=Cookie.new(5,10)
+        # When
+        result=c.sugar
+        # Then
+        assert_equal(result,5)    
     end
 
     # It should have has sugar set method 
