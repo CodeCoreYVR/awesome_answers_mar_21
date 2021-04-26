@@ -34,35 +34,60 @@ RSpec.describe JobPostsController, type: :controller do
         end
     end
     describe '#create' do
-        def valid_request
-            post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})  
+        context "with valid request" do
+            def valid_request
+                post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})  
+            end
+            it "creates a job post in the database" do
+                #Given
+                count_before=JobPost.count
+                valid_request
+                # 👆🏻 in this we are mocking the post request to the create method. the params of the request will look simillar to:{
+                # job_post:{
+                #     title: 'Senior dev',
+                #     description: 'lots of pay',
+                #     location: 'remote',
+                #     min_salary: 500_000,
+                #     max_salary: 1_000_000
+                # }
+                # }
+                # then
+                count_after=JobPost.count
+                expect(count_after).to(eq(count_before+1))
+                # eq is an assertion provided by Rspec that checks the value to the right of the .to is equal to the parameter passed in the method
+            end
+            it " redirects us to the show page for the post" do
+                # given
+                # when
+                valid_request
+                # then
+                job_post= JobPost.last
+                expect(response).to(redirect_to(job_post_url(job_post.id)))
+                #  we are using job_post_url that need an id to direct to particular show page
+    
+            end
         end
-        it "creates a job post in the database" do
-            #Given
-            count_before=JobPost.count
-            valid_request
-            # 👆🏻 in this we are mocking the post request to the create method. the params of the request will look simillar to:{
-            # job_post:{
-            #     title: 'Senior dev',
-            #     description: 'lots of pay',
-            #     location: 'remote',
-            #     min_salary: 500_000,
-            #     max_salary: 1_000_000
-            # }
-            # }
-            # then
-            count_after=JobPost.count
-            expect(count_after).to(eq(count_before+1))
-            # eq is an assertion provided by Rspec that checks the value to the right of the .to is equal to the parameter passed in the method
-        end
-        it " redirects us to the show page for the post" do
-            # given
-            # when
-            valid_request
-            # then
-            job_post= JobPost.last
-            expect(response).to(redirect_to(job_post_url(job_post.id)))
-            #  we are using job_post_url that need an id to direct to particular show page
+        context "with invalid request parameters" do
+            def invalid_request
+                post(:create, params:{job_post: FactoryBot.attributes_for(:job_post, title: nil)}) 
+            end
+            it "does not save a record in the database" do
+                # Given
+                count_before= JobPost.count
+                # When
+                invalid_request
+                # Then
+                count_after=JobPost.count
+                expect(count_after).to eq(count_before)
+                
+            end
+            it "renders the new template" do
+                #given
+                #when
+                invalid_request
+                #then
+                expect(response).to render_template(:new)
+            end
 
         end
 
