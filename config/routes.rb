@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   # resource is singular instead of resources, resource will create routes
   # that do CRUD operation on only one thing . There Will be no index routes and no route will have an :id wildcard.
   # the controller nae must be plural
-  resources :job_posts, only:[:new, :create, :show]
+  resources :job_posts, only:[:new, :create, :show, :index]
 end
 
 

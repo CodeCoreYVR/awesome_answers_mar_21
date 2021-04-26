@@ -108,6 +108,22 @@ RSpec.describe JobPostsController, type: :controller do
             expect(assigns(:job_post)).to eq(job_post)
         end
     end
+    describe "#index" do
+        it "render the index template" do
+            get(:index)
+            expect(response).to render_template(:index)
+        end
+        it "assign and instance varaible @job_posts which contains all the created job posts" do
+            #given
+            job_post_1=FactoryBot.create(:job_post)
+            job_post_2=FactoryBot.create(:job_post)
+            job_post_3=FactoryBot.create(:job_post)
+            #when
+            get(:index)
+            #then
+            expect(assigns(:job_posts)).to eq([job_post_3,job_post_2, job_post_1])
+        end
+    end
 
     
 
