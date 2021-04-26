@@ -33,6 +33,27 @@ RSpec.describe JobPostsController, type: :controller do
             # we check that the instance variable @job_post is a new instance of the class JobPost(Model) - the madel that we created in the last class 
         end
     end
+    describe '#create' do
+        it "creates a job post in the database" do
+            #Given
+            count_before=JobPost.count
+            post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})
+            # 👆🏻 in this we are mocking the post request to the create method. the params of the request will look simillar to:{
+            # job_post:{
+            #     title: 'Senior dev',
+            #     description: 'lots of pay',
+            #     location: 'remote',
+            #     min_salary: 500_000,
+            #     max_salary: 1_000_000
+            # }
+            # }
+            # then
+            count_after=JobPost.count
+            expect(count_after).to(eq(count_before+1))
+            # eq is an assertion provided by Rspec that checks the value to the right of the .to is equal to the parameter passed in the method
+        end
+
+    end
     
 
 end
