@@ -18,4 +18,7 @@ class JobPostsController < ApplicationController
             render :new
         end
     end
+    def show
+        @job_post=JobPost.find params[:id]
+    end
 end
