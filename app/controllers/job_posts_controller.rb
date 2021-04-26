@@ -3,7 +3,7 @@ class JobPostsController < ApplicationController
         @job_post=JobPost.new
     end
     def create
-        JobPost.create params.require(:job_post)
+        @job_post=JobPost.create params.require(:job_post)
         .permit(
             :title,
             :description,
@@ -12,5 +12,6 @@ class JobPostsController < ApplicationController
             :location,
             :company_name
         )
+        redirect_to job_post_path(@job_post)
     end
 end
