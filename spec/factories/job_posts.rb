@@ -15,5 +15,5 @@ FactoryBot.define do
   end
 end
 
-FactoryBot.create(:job_post)
-FactoryBot.build(:job_post)
+# FactoryBot.create(:job_post)
+# FactoryBot.build(:job_post)
