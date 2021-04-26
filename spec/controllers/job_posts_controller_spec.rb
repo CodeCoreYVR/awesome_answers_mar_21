@@ -141,7 +141,46 @@ RSpec.describe JobPostsController, type: :controller do
             expect(flash[:danger]).to be #assert that the danger property of the flash object exists
         end
     end
-
+    describe '#edit' do
+        it "render the edit template" do
+            #Given
+            job_post= FactoryBot.create(:job_post)
+            #when
+            get(:edit, params:{id: job_post.id})
+            # then
+            expect(response).to render_template(:edit)
+        end
+        
+    end
+    describe "#update" do
+        before do
+            #given
+            @job_post=FactoryBot.create(:job_post)
+        end
+        context "with valid parameters" do
+            it "update the job post record with the new attributes" do
+                #when
+                new_title="#{@job_post.title} plus some changes!!!"
+                patch :update, params:{id: @job_post.id, job_post: {title: new_title}}
+                #then
+                expect(@job_post.reload.title).to eq new_title
+            end
+            it "redirects to the show page" do
+                new_title="#{@job_post.title} plus some changes!!!"
+                patch :update, params:{id: @job_post.id, job_post:{title: new_title}}
+                expect(response).to redirect_to(@job_post)
+            end
+        end
+        context "with invalid parameters" do
+            it "should not update the job_post record in the db" do
+                patch :update, params: {id: @job_post.id, job_post: {title: nil}}
+                # we will grab the valid job_post and make it invalid
+                job_post_after_update = JobPost.find(@job_post.id)
+                expect(job_post_after_update.title).to eq @job_post.title
+            end
+        end
+        
+    end
     
 
 end
