@@ -142,23 +142,38 @@ RSpec.describe JobPostsController, type: :controller do
     end
     describe "#destroy" do
         context "with signed in user" do
-            before do # will rub all of the code before every single test within this describe block
-                session[:user_id]=FactoryBot.create(:user)
-                # Given
-                @job_post=FactoryBot.create(:job_post)
-                #when
-                delete(:destroy,params:{id: @job_post})
-            end
-            it "should remove the job post from the database" do
-                expect(JobPost.find_by(id: @job_post.id)).to be(nil)
-            end
-            it "redirect to the job post index" do
-                expect(response).to redirect_to(job_posts_path)
-            end
-            it "sets a flash message" do
-                expect(flash[:danger]).to be #assert that the danger property of the flash object exists
-            end
-        end # 👈🏻 context "with signed in user"
+            context "as owner" do
+                before do # will rub all of the code before every single test within this describe block
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    # Given
+                    @job_post=FactoryBot.create(:job_post, user: current_user)
+                    #when
+                    delete(:destroy,params:{id: @job_post})
+                end
+                it "should remove the job post from the database" do
+                    expect(JobPost.find_by(id: @job_post.id)).to be(nil)
+                end
+                it "redirect to the job post index" do
+                    expect(response).to redirect_to(job_posts_path)
+                end
+                it "sets a flash message" do
+                    expect(flash[:danger]).to be #assert that the danger property of the flash object exists
+                end
+            end# 👈🏻 context "as owner" - end
+            context "as non owner" do
+                before do
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    @job_post=FactoryBot.create(:job_post)
+                    # current loggen in user IS NOT the user that @job_post will have as the user is being generrated by the association in factory_bot(:user)
+                end
+                it 'does not remove the job post' do
+                    delete(:destroy, params:{id: @job_post.id})
+                    expect(JobPost.find(@job_post.id)).to eq(@job_post)
+                end
+            end 
+        end # 👈🏻 context "with signed in user" - end
     end
     describe '#edit' do
         context "with signed in user" do

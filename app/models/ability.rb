@@ -51,6 +51,10 @@ class Ability
     can(:crud,Answer) do |answer|
       user == answer.user
     end
+    # 👇🏻 current_user is the one who is that owner of the job_post
+    can(:crud,JobPost) do |job_post|
+      user == job_post.user
+    end
 
     if user.is_admin?
       can :manage, :all # manage means is_admin can do every thing on ALL the models 
