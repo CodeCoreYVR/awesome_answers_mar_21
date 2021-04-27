@@ -36,7 +36,12 @@ class JobPostsController < ApplicationController
         end
     end
     def edit
-
+        job_post= JobPost.find params[:id]
+        if can?(:edit,job_post)
+            render :edit
+        else
+            redirect_to job_post_path(job_post)
+        end
     end
     def update
         @job_post=JobPost.find params[:id]

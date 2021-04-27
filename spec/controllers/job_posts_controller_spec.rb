@@ -177,16 +177,37 @@ RSpec.describe JobPostsController, type: :controller do
     end
     describe '#edit' do
         context "with signed in user" do
-            before do
-                session[:user_id]=FactoryBot.create(:user)
-            end
-            it "render the edit template" do
-                #Given
-                job_post= FactoryBot.create(:job_post)
-                #when
-                get(:edit, params:{id: job_post.id})
-                # then
-                expect(response).to render_template(:edit)
+            context "as owner" do
+                
+                before do
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id]=current_user.id
+                    @job_post=FactoryBot.create(:job_post, user: current_user)
+                end
+                it "render the edit template" do
+                    #Given
+                    
+                    #when
+                    get(:edit, params:{id: @job_post.id})
+                    # then
+                    expect(response).to render_template(:edit)
+                end
+            end # 👈🏻 context "as owner" - end
+            # Create a context for 'non owner'
+            # create a user which is 'non owner'
+            # redirect it to the show page on edit
+            context "as non owner" do
+                before do
+                    current_user=FactoryBot.create(:user)
+                    session[:user_id] = current_user.id
+                    @job_post=FactoryBot.create(:job_post)
+                end
+                it 'does not edit job post redirect to show page' do
+                    #when ??
+                    get(:edit, params:{id: @job_post.id})
+                    #then
+                    expect(response).to redirect_to(job_post_path(@job_post))
+                end
             end
         end
         
