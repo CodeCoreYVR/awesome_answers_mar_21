@@ -12,6 +12,7 @@ FactoryBot.define do
     company_name{Faker::Company.name}
     min_salary{rand(80_000..200_000)}
     max_salary{rand(200_000..400_000)}
+    association(:user, factory: :user)
   end
 end
 
