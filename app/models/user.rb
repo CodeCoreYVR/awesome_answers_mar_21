@@ -12,6 +12,7 @@ class User < ApplicationRecord
     # it will add a 'authenticate' method to verify user's password. if called with the correct password, it will return 'true' or 'false' based on if the password is correct or not
     has_many :questions, dependent: :nullify
     has_many :answers, dependent: :nullify
+    has_many :job_posts, dependent: :nullify
 
     def full_name
         "#{first_name} #{last_name}"
