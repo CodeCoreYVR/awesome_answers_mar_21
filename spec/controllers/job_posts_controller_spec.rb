@@ -136,30 +136,38 @@ RSpec.describe JobPostsController, type: :controller do
         end
     end
     describe "#destroy" do
-        before do # will rub all of the code before every single test within this describe block
-            # Given
-            @job_post=FactoryBot.create(:job_post)
-            #when
-            delete(:destroy,params:{id: @job_post})
-        end
-        it "should remove the job post from the database" do
-            expect(JobPost.find_by(id: @job_post.id)).to be(nil)
-        end
-        it "redirect to the job post index" do
-            expect(response).to redirect_to(job_posts_path)
-        end
-        it "sets a flash message" do
-            expect(flash[:danger]).to be #assert that the danger property of the flash object exists
-        end
+        context "with signed in user" do
+            before do # will rub all of the code before every single test within this describe block
+                session[:user_id]=FactoryBot.create(:user)
+                # Given
+                @job_post=FactoryBot.create(:job_post)
+                #when
+                delete(:destroy,params:{id: @job_post})
+            end
+            it "should remove the job post from the database" do
+                expect(JobPost.find_by(id: @job_post.id)).to be(nil)
+            end
+            it "redirect to the job post index" do
+                expect(response).to redirect_to(job_posts_path)
+            end
+            it "sets a flash message" do
+                expect(flash[:danger]).to be #assert that the danger property of the flash object exists
+            end
+        end # 👈🏻 context "with signed in user"
     end
     describe '#edit' do
-        it "render the edit template" do
-            #Given
-            job_post= FactoryBot.create(:job_post)
-            #when
-            get(:edit, params:{id: job_post.id})
-            # then
-            expect(response).to render_template(:edit)
+        context "with signed in user" do
+            before do
+                session[:user_id]=FactoryBot.create(:user)
+            end
+            it "render the edit template" do
+                #Given
+                job_post= FactoryBot.create(:job_post)
+                #when
+                get(:edit, params:{id: job_post.id})
+                # then
+                expect(response).to render_template(:edit)
+            end
         end
         
     end
