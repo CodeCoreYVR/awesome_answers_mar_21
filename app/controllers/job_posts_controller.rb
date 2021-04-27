@@ -12,6 +12,7 @@ class JobPostsController < ApplicationController
             :location,
             :company_name
         )
+        @job_post.user= current_user
         if @job_post.save
             redirect_to job_post_path(@job_post)
         else
