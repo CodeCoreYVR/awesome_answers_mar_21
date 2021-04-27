@@ -1,4 +1,5 @@
 class JobPostsController < ApplicationController
+    before_action :authenticate_user!, except:[:index,:show]
     def new
         @job_post=JobPost.new
     end

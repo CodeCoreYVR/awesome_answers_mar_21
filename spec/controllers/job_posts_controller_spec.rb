@@ -34,14 +34,14 @@ RSpec.describe JobPostsController, type: :controller do
         end
     end
     describe '#create' do
+        def valid_request
+            post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})  
+        end
         context "with user signed in" do # 👈🏻 Context "with user signin" -- Start
             before do
                 session[:user_id]=FactoryBot.create(:user)
             end
             context "with valid request" do
-                def valid_request
-                    post(:create, params:{job_post: FactoryBot.attributes_for(:job_post)})  
-                end
                 it "creates a job post in the database" do
                     #Given
                     count_before=JobPost.count
@@ -96,6 +96,11 @@ RSpec.describe JobPostsController, type: :controller do
             end# 👈🏻 Context "with invalid parameters" -- End
         end# 👈🏻 Context "with user signin" -- End
         context "with user not signed in" do# 👈🏻 Context "with user not signed in" -- starts
+            it "should redirect to sign in page" do
+                valid_request
+                expect(response).to redirect_to(new_session_path)
+            end
+
         end# 👈🏻 Context "with user not signed in" -- End
     end
     describe '#show' do
