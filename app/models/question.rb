@@ -6,7 +6,7 @@ class Question < ApplicationRecord
     #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
     belongs_to :user, optional: true
 
-    has_many :likes
+    has_many :likes, dependent: :destroy
     has_many :likers, through: :likes, source: :user
 
     #The below association can only be used if join table does not need a Model

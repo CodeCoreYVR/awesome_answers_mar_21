@@ -14,7 +14,7 @@ class User < ApplicationRecord
     has_many :answers, dependent: :nullify
     has_many :job_posts, dependent: :nullify
 
-    has_many :likes
+    has_many :likes, dependent: :destroy
     has_many :liked_questions, through: :likes, source: :question
     
     # has_and_belongs_to_many(
