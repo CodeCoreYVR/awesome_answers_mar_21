@@ -41,6 +41,7 @@ class QuestionsController < ApplicationController
         # @question.save
         @answer=Answer.new
         @answers=@question.answers.order(created_at: :desc)
+        @like = @question.likes.find_by(user: current_user)
     end
 
     def edit
