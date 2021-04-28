@@ -6,15 +6,20 @@ class Question < ApplicationRecord
     #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
     belongs_to :user, optional: true
 
-    has_and_belongs_to_many(
-        :likes,
-        {
-        class_name: 'User',
-        join_table: 'likes',
-        association_foreign_key: 'user_id',
-        foreign_key: 'question_id'
-        }
-    )
+    has_many :likes
+    has_many :likers, through: :likes, source: :user
+
+    #The below association can only be used if join table does not need a Model
+    #However, without a Model it cannot change attributes or have Controller actions
+    # has_and_belongs_to_many(
+    #     :likes,
+    #     {
+    #     class_name: 'User',
+    #     join_table: 'likes',
+    #     association_foreign_key: 'user_id',
+    #     foreign_key: 'question_id'
+    #     }
+    # )
 
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
