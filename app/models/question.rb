@@ -6,6 +6,16 @@ class Question < ApplicationRecord
     #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
     belongs_to :user, optional: true
 
+    has_and_belongs_to_many(
+        :likes,
+        {
+        class_name: 'User',
+        join_table: 'likes',
+        association_foreign_key: 'user_id',
+        foreign_key: 'question_id'
+        }
+    )
+
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
     #This above command creates this model Class in file question.rb
