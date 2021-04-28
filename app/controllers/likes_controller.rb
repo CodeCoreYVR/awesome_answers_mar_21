@@ -16,7 +16,8 @@ class LikesController < ApplicationController
     end
 
     def destroy
-        like = current_user.likes.find params[:id]
+        # like = Like.find params[:id]. with this way a user is able to search all likes
+        like = current_user.likes.find params[:id] # this way user can only search his/her own likes
 
         if !can?(:destroy, like)
             flash[:warning] = "You cannot destroy a like you don't own"

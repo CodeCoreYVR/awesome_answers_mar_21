@@ -3,8 +3,8 @@ class Like < ApplicationRecord
     #If you want to create this from scratch with migration for join table, do:
     #rails g model Like user:references question:references
 
-    belongs_to: question
-    belongs_to: user
+    belongs_to :question
+    belongs_to :user
 
     validates(
         :question_id,
