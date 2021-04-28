@@ -1,5 +1,6 @@
 class LikesController < ApplicationController
     #rails g controller likes --no-helper --no-assets --no-controller-specs --no-view-specs --skip-template-engine
+    before_action :authenticate_user!, only: [:create, :destroy]
 
     def create
         question = Question.find params[:question_id]

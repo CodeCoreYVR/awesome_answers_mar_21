@@ -60,6 +60,10 @@ class QuestionsController < ApplicationController
         redirect_to questions_path
     end
 
+    def liked
+        @questions = current_user.liked_questions.order(created_at: :desc)
+    end
+
     private
 
     def question_params
