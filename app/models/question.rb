@@ -11,6 +11,9 @@ class Question < ApplicationRecord
 
     #The below association can only be used if join table does not need a Model
     #However, without a Model it cannot change attributes or have Controller actions
+    # You should use has_many :through if you need validations, callbacks, or extra attributes on the join model.
+    # has_and_belongs_to_many can be created without a join model.
+
     # has_and_belongs_to_many(
     #     :likes,
     #     {
@@ -20,6 +23,15 @@ class Question < ApplicationRecord
     #     foreign_key: 'question_id'
     #     }
     # )
+
+    # Docs:
+    # has_and_belongs_to_many(name, scope=nil, {options}, &extension)
+    # The options are as follows:
+    # :class_name => the model that the association points to
+    # :join_table => the join table used to creat this association 
+    # :foreign_key => on the join table, which foreign key points to this current model
+    # :association_foreign_key => on the join table, which foreign key points to
+    #   the associated table
 
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
