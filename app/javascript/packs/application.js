@@ -11,5 +11,8 @@ Rails.start()
 ActiveStorage.start()
 
 import 'bootstrap';
+import './selectize';
+window.jQuery = $;
+window.$ = $;
 
-console.log('Hell from app/javascript/packs/application.js')
+console.log('Hello from app/javascript/packs/application.js')

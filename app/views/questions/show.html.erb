@@ -1,6 +1,16 @@
 <h1><%= @question.title %></h1>
 <p><%= @question.body %></p>
-<p><strong>Tags:</strong><%= @question.tags.map(&:name).join(", ") %></p>
+<% unless @question.tags.empty? %>
+    <p>
+        Tags:
+        <% @question.tags.each do |tag| %>
+            <%= link_to(
+                tag.name, '/',
+                class: 'badge badge-pill badge-primary'
+            ) %>
+        <% end %>
+    </p>
+<% end %>
 <h4>Created by: <%= @question.user&.full_name || 'DELETEd'%></h4>
 <p><strong>View Count:</strong><%= @question.view_count %></p>
 <p><strong>Created At:</strong><%= @question.created_at %></p>
