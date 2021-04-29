@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
     def question_params
         # params.require(:question): We must have a question object on the params of the request
         # .permit(:title, :body): For security reasons we only permit the title and body key/value pairs of the question
-        params.require(:question).permit(:title, :body)
+        params.require(:question).permit(:title, :body, tag_ids: [])
     end
 
     def find_question
