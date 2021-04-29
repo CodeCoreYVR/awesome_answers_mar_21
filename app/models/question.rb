@@ -24,6 +24,11 @@ class Question < ApplicationRecord
     #     }
     # )
 
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings #, source: :tag
+    #If the name of the association (i.e. tags) is the same as the source singularized (i.e tags)
+    #then source names argument can be omitted
+
     # Docs:
     # has_and_belongs_to_many(name, scope=nil, {options}, &extension)
     # The options are as follows:
