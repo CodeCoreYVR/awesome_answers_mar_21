@@ -10,7 +10,14 @@ class QuestionsController < ApplicationController
 
     #returns all the questions from the database
     def index
-       @questions = Question.all.order(created_at: :desc) #Model.all is a method built into active record used to return all records of that model 
+        if params[:tag]
+            @tag = Tag.find_or_initialize_by(name: params[:tag])
+            @questions = @tag.questions.all.order('updated_at DESC')
+        else
+            #@questions = Question.all.all_with_answer_counts.order('updated_at DESC')
+            #above method is used if you only want to display questions that have answers associated
+            @questions = Question.all.order(created_at: :desc) #Model.all is a method built into active record used to return all records of that model 
+        end
     end
 
     def new
