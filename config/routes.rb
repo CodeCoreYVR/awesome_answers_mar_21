@@ -64,6 +64,13 @@ Rails.application.routes.draw do
   # that do CRUD operation on only one thing . There Will be no index routes and no route will have an :id wildcard.
   # the controller nae must be plural
   resources :job_posts, only:[:new, :create, :show, :index, :destroy, :edit, :update]
+  match(
+    "/delayed_job",
+    to: DelayedJobWeb,
+    anchor:false,
+    via:[:get,:post]
+  )
+  # https://guides.rubyonrails.org/active_job_basics.html #👈🏻 Link for active jobs
 end
 
 
