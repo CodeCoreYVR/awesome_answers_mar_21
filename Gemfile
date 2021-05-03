@@ -63,7 +63,7 @@ group :development do
   
   gem 'pry', '~> 0.14.1'
   gem 'pry-rails', '~> 0.3.9'
-  
+  gem "letter_opener"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
