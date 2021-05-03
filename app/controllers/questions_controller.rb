@@ -10,7 +10,14 @@ class QuestionsController < ApplicationController
 
     #returns all the questions from the database
     def index
-       @questions = Question.all.order(created_at: :desc) #Model.all is a method built into active record used to return all records of that model 
+        if params[:tag]
+            @tag = Tag.find_or_initialize_by(name: params[:tag])
+            @questions = @tag.questions.all.order('updated_at DESC')
+        else
+            #@questions = Question.all.all_with_answer_counts.order('updated_at DESC')
+            #above method is used if you only want to display questions that have answers associated
+            @questions = Question.all.order(created_at: :desc) #Model.all is a method built into active record used to return all records of that model 
+        end
     end
 
     def new
@@ -41,6 +48,7 @@ class QuestionsController < ApplicationController
         # @question.save
         @answer=Answer.new
         @answers=@question.answers.order(created_at: :desc)
+        @like = @question.likes.find_by(user: current_user)
     end
 
     def edit
@@ -59,12 +67,16 @@ class QuestionsController < ApplicationController
         redirect_to questions_path
     end
 
+    def liked
+        @questions = current_user.liked_questions.order(created_at: :desc)
+    end
+
     private
 
     def question_params
         # params.require(:question): We must have a question object on the params of the request
         # .permit(:title, :body): For security reasons we only permit the title and body key/value pairs of the question
-        params.require(:question).permit(:title, :body)
+        params.require(:question).permit(:title, :body, :tag_names)
     end
 
     def find_question

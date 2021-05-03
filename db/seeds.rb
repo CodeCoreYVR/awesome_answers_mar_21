@@ -7,6 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 #To run this file use command: rails db:seed
+Like.destroy_all
+Tagging.destroy_all
+Tag.destroy_all
 User.destroy_all
 Answer.destroy_all # .delete_all
 Question.destroy_all
@@ -38,6 +41,16 @@ super_user= User.create(
 end
 users=User.all
 
+NUM_TAGS = 20
+
+NUM_TAGS.times do
+    Tag.create(
+        name: Faker::Vehicle.make
+    )
+end
+
+tags = Tag.all
+
 NUM_QUESTION.times do
     created_at = Faker::Date.backward(days:365 * 5)
 
@@ -54,6 +67,9 @@ NUM_QUESTION.times do
             Answer.new(body: Faker::GreekPhilosophers.quote,user: users.sample)
         end
     end
+
+    q.likers = users.shuffle.slice(0, rand(users.count))
+    q.tags = tags.shuffle.slice(0, rand(tags.count))
 end
 
 questions = Question.all
@@ -63,3 +79,5 @@ puts Cowsay.say("Generated #{questions.count} questions", :sheep)
 puts Cowsay.say("Generated #{answer.count} answers", :tux)
 puts Cowsay.say("Generated #{users.count} users", :beavis)
 puts Cowsay.say("Login with #{super_user.email} and password: #{PASSWORD}", :koala)
+puts Cowsay.say("Generated #{Like.count} likes", :frogs)
+puts Cowsay.say("Generated #{Tag.count} tags", :bunny)

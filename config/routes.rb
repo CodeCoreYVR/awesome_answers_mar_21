@@ -49,6 +49,12 @@ Rails.application.routes.draw do
   #resources builds all of the above RESTful routes to Rails Convention
   resources :questions do
     resources :answers, only:[:create, :destroy]
+    resources :likes, shallow: true, only: [:create, :destroy]
+    #shallow: true option changes PATH of the created route
+    #original route without shallow true => questions/19/likes/30
+    #Route with shallow true => likes/30
+    get :liked, on: :collection
+    #above route creates a path like: GET "/questions/liked" kind of similar to index but only questions the user has liked
   end
 
   resources :users, only:[:new,:create]

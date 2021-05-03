@@ -60,5 +60,13 @@ class Ability
       can :manage, :all # manage means is_admin can do every thing on ALL the models 
     end
 
+    can(:like, Question) do |question|
+      user.persisted? && question.user != user
+    end
+
+    can(:destroy, Like) do |like|
+      like.user == user
+    end
+
   end
 end

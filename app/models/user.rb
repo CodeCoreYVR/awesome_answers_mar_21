@@ -14,6 +14,19 @@ class User < ApplicationRecord
     has_many :answers, dependent: :nullify
     has_many :job_posts, dependent: :nullify
 
+    has_many :likes, dependent: :destroy
+    has_many :liked_questions, through: :likes, source: :question
+    
+    # has_and_belongs_to_many(
+    #     :liked_questions, #this is the name that we want to give this association
+    #     {
+    #         class_name: 'Question', #Name of the model we are associating to
+    #         join_table: 'likes', #Name of the join table
+    #         association_foreign_key: 'question_id', #This is the name of the key which will act as a foreign key
+    #         foreign_key: 'user_id' #This is the name of the key that will be used as foreign key in the join table of this table
+    #     }
+    # )
+
     def full_name
         "#{first_name} #{last_name}"
     end

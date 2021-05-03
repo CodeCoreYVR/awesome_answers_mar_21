@@ -6,6 +6,38 @@ class Question < ApplicationRecord
     #  :nullify option :it will keep all the answer whose question is the id of deleted question and place null as question_id
     belongs_to :user, optional: true
 
+    has_many :likes, dependent: :destroy
+    has_many :likers, through: :likes, source: :user
+
+    #The below association can only be used if join table does not need a Model
+    #However, without a Model it cannot change attributes or have Controller actions
+    # You should use has_many :through if you need validations, callbacks, or extra attributes on the join model.
+    # has_and_belongs_to_many can be created without a join model.
+
+    # has_and_belongs_to_many(
+    #     :likes,
+    #     {
+    #     class_name: 'User',
+    #     join_table: 'likes',
+    #     association_foreign_key: 'user_id',
+    #     foreign_key: 'question_id'
+    #     }
+    # )
+
+    has_many :taggings, dependent: :destroy
+    has_many :tags, through: :taggings #, source: :tag
+    #If the name of the association (i.e. tags) is the same as the source singularized (i.e tags)
+    #then source names argument can be omitted
+
+    # Docs:
+    # has_and_belongs_to_many(name, scope=nil, {options}, &extension)
+    # The options are as follows:
+    # :class_name => the model that the association points to
+    # :join_table => the join table used to creat this association 
+    # :foreign_key => on the join table, which foreign key points to this current model
+    # :association_foreign_key => on the join table, which foreign key points to
+    #   the associated table
+
     #GENERATING THIS FILE:
     #rails g model question title:string body:text
     #This above command creates this model Class in file question.rb
@@ -76,6 +108,34 @@ class Question < ApplicationRecord
         self.left_outer_joins(:answers)
             .select("questions.*","Count(answers.*) AS answers_count")
             .group('questions.id')
+    end
+
+    #Getter
+    def tag_names
+        self.tags.map(&:name).join(", ")
+        #The & symbol is used to tell Ruby that the following argument
+        #should be given as a block given to the method. So the line:
+        # self.tags.map(&:name).join(", ")
+        #is equivalent to: 
+        #self.tags.map { |x| x.name }.join(", ")
+        #So the above will iterate over the collection salf.tags
+        #and build an array with the results of the name method
+        #called on every item
+    end
+
+    #Appending = at the end of a method name, allows us to implement a 'setter'
+    #A setter is a method that is assignamble.
+    #Example: q.tag_names = "another tag name"
+
+    #Setter
+    #This is similar to implementing an 'attr_writer'
+    def tag_names=(rhs)
+        self.tags = rhs.strip.split(/\s*,\s*/).map do |tag_name|
+            #Finds the first record with the given attributes, or
+            #initializes a record (Tag.new) with the attributes
+            #if one is not found
+            Tag.find_or_initialize_by(name: tag_name)
+        end
     end
 
     private
