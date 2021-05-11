@@ -71,6 +71,21 @@ Rails.application.routes.draw do
     via:[:get,:post]
   )
   # https://guides.rubyonrails.org/active_job_basics.html #👈🏻 Link for active jobs
+
+  # The namespace method will use the controller found in a directory
+  # called api and then in a nested directory for v1
+
+  # defaults: { format: :json } will set "json" as the default 
+  # response format for all the routes contained within the block
+
+  # GET /api/v1/questions -> api/v1/questions#index
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :questions
+      resource :session, only: [:create, :destroy]
+      resources :users, only: [:create]
+    end
+  end
 end
 
 

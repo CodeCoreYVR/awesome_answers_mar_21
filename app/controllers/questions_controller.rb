@@ -49,6 +49,12 @@ class QuestionsController < ApplicationController
         @answer=Answer.new
         @answers=@question.answers.order(created_at: :desc)
         @like = @question.likes.find_by(user: current_user)
+
+        # To request json, we can go to http://localhost:3000/questions/1.json
+        respond_to do |format|
+          format.html { render }
+          format.json { render json: @question }
+        end
     end
 
     def edit
