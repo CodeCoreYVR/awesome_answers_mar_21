@@ -1,7 +1,7 @@
 # Make sure to inherit from the Api::ApplicationController instead of
 # ApplicationController
 class Api::V1::QuestionsController < Api::ApplicationController
-  before_action :find_question, only: [:show, :destroy]
+  before_action :find_question, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only: [ :create, :destroy ]
 
   def index
@@ -35,6 +35,17 @@ class Api::V1::QuestionsController < Api::ApplicationController
       render(
         json: { errors: question.errors.messages },
         status: 422 # Unprocessable Entity
+      )
+    end
+  end
+
+  def update
+    if @question.update question_params
+      render json: { id: @question.id }
+    else
+      render(
+        json: { errors: @question.errors.messages },
+        status: 422
       )
     end
   end
