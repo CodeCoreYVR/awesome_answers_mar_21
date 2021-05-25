@@ -1,4 +1,6 @@
 class Api::V1::UsersController < Api::ApplicationController
+  before_action :authenticate_user!, only: [:current]
+
   def create
     user_params = params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
     user = User.new user_params
@@ -12,5 +14,9 @@ class Api::V1::UsersController < Api::ApplicationController
         status: 422 # Unprocessable Entity
       )
     end
+  end
+
+  def current
+    render json: current_user
   end
 end
