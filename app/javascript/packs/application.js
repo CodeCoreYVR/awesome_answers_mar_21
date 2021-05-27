@@ -12,6 +12,8 @@ ActiveStorage.start()
 
 import 'bootstrap';
 import './selectize';
+import 'underscore';
+
 window.jQuery = $;
 window.$ = $;
 

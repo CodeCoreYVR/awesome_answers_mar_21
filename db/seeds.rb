@@ -25,6 +25,7 @@ PASSWORD='supersecret'
 super_user= User.create(
     first_name: "Jon",
     last_name: 'Snow',
+    address: '628 6th Avenue, New Westminster, BC, Canada', #Faker::Address.street_address
     email: 'js@winterfell.gov',
     password: PASSWORD,
     is_admin: true
@@ -35,6 +36,7 @@ super_user= User.create(
     User.create(
     first_name: first_name,
     last_name: last_name,
+    address: '700 Royal Avenue, New Westminster, BC, Canada',
     email: "#{first_name}.#{last_name}@example.com",
     password: PASSWORD
     )

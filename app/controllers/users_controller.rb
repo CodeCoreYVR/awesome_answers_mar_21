@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+    def show
+        @user=User.find params[:id]
+    end
+
     def new
         @user=User.new
     end
@@ -14,7 +18,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation) ## Stron Parameters
+        params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :address) ## Stron Parameters
         # It provides an interface for protecting attributes from end-use assignment. This makes action controller parameters forbidden to be used in Active Model mass assignement until they have been explictly enumerated/declared here. 
 
     end

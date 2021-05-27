@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     #above route creates a path like: GET "/questions/liked" kind of similar to index but only questions the user has liked
   end
 
-  resources :users, only:[:new,:create]
+  resources :users, only:[:new,:create, :show]
 
   resource :session, only:[:new,:create, :destroy]
   # resource is singular instead of resources, resource will create routes
@@ -97,6 +97,7 @@ Rails.application.routes.draw do
     #via: :all  will match all possible methods
     match "*unmatched_route", to: "application#not_found", via: :all
   end
+
 end
 
 
